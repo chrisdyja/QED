@@ -1,3 +1,3 @@
 # QED
 
-QED folder -> backend
+QED folder => backend
