@@ -28,7 +28,7 @@ namespace QedUnitTests
         }
 
         [Fact]
-        public async Task AddCommand_ShouldCalculateSum()
+        public async Task AddCommand_ShouldCallApiWithValidInputs()
         {
             double A = 2;
             double B = 3;
@@ -53,7 +53,7 @@ namespace QedUnitTests
         }
 
         [Fact]
-        public async Task AddCommand_ShouldCalculateSum_WhenUsingNegativeNumbers()
+        public async Task AddCommand_ShouldCallApi_WhenInputContainsNegativeNumbers()
         {
             double A = -2;
             double B = 3;
@@ -78,7 +78,7 @@ namespace QedUnitTests
         }
 
         [Fact]
-        public async Task AddCommand_ShouldCalculateSum_WhenUsingLargeNumbers()
+        public async Task AddCommand_ShouldCallApi_WhenInputContainsLargeNumbers()
         {
             double A = double.MaxValue;
             double B = 3;
@@ -103,7 +103,7 @@ namespace QedUnitTests
         }
 
         [Fact]
-        public async Task AddCommand_ShouldCalculateSum_WhenUsingFloatingPointNumbers()
+        public async Task AddCommand_ShouldCallApi_WhenInputContainsFloatingPointNumbers()
         {
             double A = 2.7;
             double B = 3;
@@ -128,7 +128,84 @@ namespace QedUnitTests
         }
 
         [Fact]
-        public async Task InputValidationSuccess_ShouldBeFalse_WhenInputContainsDotDelimiter()
+        public async Task AddCommand_ShouldCallApi_WhenInputContainsNegativeFloatingPointNumbers()
+        {
+            double A = -2.7;
+            double B = 3;
+            string inputA = A.ToString();
+            string inputB = B.ToString();
+
+            // Arrange
+            var mockApiService = new Mock<IQedApiService>();
+            mockApiService
+                .Setup(service => service.GetAsync<SumResponse>(A, B))
+                .ReturnsAsync(new SumResponse { Sum = A + B });
+
+            var viewModel = new MainViewModel(mockApiService.Object);
+            viewModel.NumberA = inputA;
+            viewModel.NumberB = inputB;
+
+            // Act
+            await viewModel.AddCommand.Execute();
+
+            // Assert
+            Assert.Equal((A + B).ToString(), viewModel.Sum);
+        }
+
+        [Fact]
+        public async Task AddCommand_ShouldNotCallApi_WhenInputContainsTwoCommas()
+        {
+            double A = 2.76;
+            double B = 3;
+            string inputA = "2,7,6";
+            string inputB = B.ToString();
+
+            // Arrange
+            var mockApiService = new Mock<IQedApiService>();
+            mockApiService
+                .Setup(service => service.GetAsync<SumResponse>(A, B))
+                .ReturnsAsync(new SumResponse { Sum = A + B });
+
+            var viewModel = new MainViewModel(mockApiService.Object);
+            viewModel.NumberA = inputA;
+            viewModel.NumberB = inputB;
+
+            // Act
+            await viewModel.AddCommand.Execute();
+
+            // Assert
+            Assert.False(viewModel.InputValidationSuccess);
+            Assert.Null(viewModel.Sum);
+        }
+
+        [Fact]
+        public async Task AddCommand_ShouldNotCallApi_WhenInputContainsNumbersAndCharacters()
+        {
+            double A = 2.7;
+            double B = 3;
+            string inputA = "2,a";
+            string inputB = B.ToString();
+
+            // Arrange
+            var mockApiService = new Mock<IQedApiService>();
+            mockApiService
+                .Setup(service => service.GetAsync<SumResponse>(A, B))
+                .ReturnsAsync(new SumResponse { Sum = A + B });
+
+            var viewModel = new MainViewModel(mockApiService.Object);
+            viewModel.NumberA = inputA;
+            viewModel.NumberB = inputB;
+
+            // Act
+            await viewModel.AddCommand.Execute();
+
+            // Assert
+            Assert.False(viewModel.InputValidationSuccess);
+            Assert.Null(viewModel.Sum);
+        }
+
+        [Fact]
+        public async Task InputValidationSuccess_ShouldBeFalse_WhenInputContainsDotFloatingPointSeperator()
         {
             double A = 2.7;
             double B = 3;

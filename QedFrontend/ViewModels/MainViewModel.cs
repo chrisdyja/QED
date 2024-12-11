@@ -53,7 +53,6 @@ public class MainViewModel : ReactiveObject
             this.RaiseAndSetIfChanged(ref _numberB, value);
             ValidateInput();
         }
-
     }
 
     private string? _sum;

@@ -25,8 +25,8 @@
     <TextBox Grid.Column="0" Grid.Row="1" Text="{Binding NumberA, Mode=TwoWay}" BorderThickness="0" FontSize="20" VerticalContentAlignment="Center" Background="{StaticResource ReadOnlyTextColor}" Width="80" Height="50"></TextBox>
     <Label Grid.Column="1" Grid.Row="1" Content="+" Height="50" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"></Label>
     <TextBox Grid.Column="2" Grid.Row="1" Text="{Binding NumberB, Mode=TwoWay}" BorderThickness="0" FontSize="20" VerticalContentAlignment="Center" Background="{StaticResource ReadOnlyTextColor}" Width="80" Height="50"></TextBox>
-    <Label Grid.Column="3" Grid.Row="1" Content="=" Height="50" FontSize="20" VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-    <Label Grid.Column="4" Grid.Row="1" Content="{Binding Sum}" FontSize="20" VerticalContentAlignment="Center" CornerRadius="3" Background="#d0efff" HorizontalAlignment="Center" VerticalAlignment="Center" Width="80" Height="50"></Label>
+    <Label Grid.Column="3" Grid.Row="1" Content="=" Height="50" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" ></Label>
+    <Label Grid.Column="4" Grid.Row="1" Content="{Binding Sum}" Width="80" Height="50" FontSize="20" CornerRadius="3" Background="#d0efff" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"></Label>
     <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="5" Content="{Binding StatusMessage}" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="5"
             FontSize="20"
